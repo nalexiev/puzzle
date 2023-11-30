@@ -1,0 +1,35 @@
+.template {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.templateWrapper {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  box-sizing: border-box;
+  border-radius: 20px;
+  -webkit-box-shadow: 1px -1px 25px 7px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: 1px -1px 25px 7px rgba(0, 0, 0, 0.43);
+  box-shadow: 1px -1px 25px 7px rgba(0, 0, 0, 0.43);
+  background-color: rgba(157, 61, 160, 0.699);
+  transition: all 0.5s ease;
+  border: 5px solid rgba(53, 6, 43, 0.418);
+}
+
+.templateWrapper .template .tile {
+  background: radial-gradient(circle, rgb(45, 5, 68) 0%, rgb(168, 18, 255) 53%, rgb(128, 11, 89)90%);
+}
+
+.templateWrapper .template .tile.perfect {
+  background: rgb(45,233,38);
+  background: linear-gradient(45deg, rgba(45,233,38,1) 0%, rgba(27,255,18,1) 44%, rgba(57,167,57,1) 100%);
+  transition: all .6s ease;
+}
+
+.templateWrapper .template .tile.near {
+  background: rgb(226,233,38);
+  background: linear-gradient(45deg, rgba(226,233,38,1) 0%, rgba(214,255,18,1) 44%, rgba(163,167,57,1) 100%);
+  transition: all .6s ease;
+}

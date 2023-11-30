@@ -1,0 +1,48 @@
+.templateAnimatedWrapper .templateAnimated {
+    position: absolute;
+    transition: all 1s ease;
+    top: 0px;
+    left: 0px;
+    width: 33.333%;
+}
+
+.templateAnimatedWrapper.visible {
+    opacity: 1;
+}
+
+.templateAnimatedWrapper .templateAnimated:nth-child(1) {
+    left: 0px;
+}
+
+.templateAnimatedWrapper .templateAnimated:nth-child(2) {
+    left: 33.333%;
+}
+
+.templateAnimatedWrapper .templateAnimated:nth-child(3) {
+    left: 66.666%;
+}
+
+.templateAnimatedWrapper .templateAnimated.shuffled {
+    top: -33896%;
+}
+
+.templateAnimatedWrapper {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: rgba(157, 61, 160, 0.699);
+    transition: all 0.5s ease;
+    border: 5px solid rgba(53, 6, 43, 0.418);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    opacity: 0;
+}
+
+.templateAnimatedWrapper .templateAnimated .tile {
+    background: radial-gradient(circle, rgb(45, 5, 68) 0%, rgb(168, 18, 255) 53%, rgb(128, 11, 89)90%);
+    margin-bottom: 4px;
+}

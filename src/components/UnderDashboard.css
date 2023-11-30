@@ -1,0 +1,9 @@
+.underDashboard {
+    width: 50%;
+    height: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: -52%;
+    top: 0;
+    border-radius: 15px;
+}

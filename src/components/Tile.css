@@ -1,0 +1,43 @@
+.tile {
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  line-height: 100%;
+  border-radius: 15px;
+  margin: 2px;
+  background: linear-gradient(45deg, rgba(16,108,144,1) 0%, rgba(65,187,235,1) 50%, rgba(28,147,193,1) 100%);
+  position: relative;
+}
+
+.tile .inner {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  top: 15px;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.tile .inner span {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.tile .inner .multiplier {
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background: rgb(45,233,38);
+  background: linear-gradient(45deg, rgba(45,233,38,0.7) 0%, rgba(14, 93, 12, 0.7) 44%, rgba(57,167,57,0.7) 100%);
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 500;
+}
