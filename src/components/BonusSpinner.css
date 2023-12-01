@@ -1,51 +1,57 @@
 .spinner {
-    width: 400px;
-    height: 200px;
-    perspective: 600px;
+    width: 600px;
+    height: 140px;
     position: absolute;
-    top: calc(50% - 100px);
-    left: calc(50% - 200px);
-    visibility: hidden;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgb(252, 186, 3);
+    overflow: hidden;
+    top: -1000px;
+    transition: all 1s ease;
+    box-shadow: -1px -1px 26px 8px rgba(0, 0, 0, 0.37);
+    border-radius: 14px;
 }
 
 .spinner.visible {
-    visibility: visible;
+    top: 50%;
 }
 
-.spinner .cube {
-    width: 400px; 
-    height: 200px;
+.spinner > .spinner-inner {
     position: relative;
-    transform-style: preserve-3d;
-    transform: translateZ(-100px) rotateX(0deg);
-    transition: transform 2s;
+    transition: all 4s ease;
 }
 
-.cube.show-win { transform: translateZ(-100px) rotateX(-1080deg); }
-.cube.show-loose { transform: translateZ(-100px) rotateX(-1170deg);  }
-
-.cube__face {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  line-height: 200px;
-  font-size: 20px;
-  font-weight: bold;
-  color: black;
-  text-align: center;
+.spinner > .spinner-inner > div {
+    display: block;
+    text-align: center;
+    font-size: 45px;
+    padding: 40px;
 }
 
-.cube__face--front  { width: 400px; height: 200px; background: rgb(146 172 65); }
-.cube__face--right  { width: 200px; height: 200px; background: rgb(219 58 60); }
-.cube__face--back   { width: 400px; height: 200px; background: rgb(219 58 60); }
-.cube__face--left   { width: 200px; height: 200px; background: rgb(219 58 60); }
-.cube__face--top    { width: 400px; height: 200px; background: rgb(219 58 60); }
-.cube__face--bottom { width: 400px; height: 200px; background: rgb(219 58 60); }
+.spinner > .spinner-inner > div.free-spin {
+    background-color: rgb(52, 176, 207);
+}
 
-.cube__face--front  { transform: rotateY(  0deg) translateZ(100px); }
-.cube__face--right  { transform: rotateY( 90deg) translateZ(100px); }
-.cube__face--back   { transform: rotateY(180deg) translateZ(100px); }
-.cube__face--left   { transform: rotateY(-90deg) translateZ(100px); }
-.cube__face--top    { transform: rotateX( 90deg) translateZ(100px); }
-.cube__face--bottom { transform: rotateX(-90deg) translateZ(100px); }
+.spinner > .spinner-inner > div.near-to-perfect {
+    background-color: rgb(52, 207, 137);
+}
+
+.spinner > .spinner-inner > div.single-tile-shuffle {
+    background-color: rgb(153, 207, 52);
+}
+
+.spinner > .spinner-inner > div.perfect-to-near {
+    background-color: rgb(207, 179, 52);
+}
+
+.spinner > .spinner-inner > div.swap-near-tiles {
+    background-color: rgb(176, 52, 207);
+}
+
+.spinner > .spinner-inner > div.all-near-to-perfect {
+    background-color: rgb(224, 115, 31);
+}
+
+.spinner > .spinner-inner > div.no-bonus {
+    background-color: rgb(207, 52, 67);
+}

@@ -5,7 +5,7 @@ import "./Dashboard.css";
 
 function Dashboard(props) {
   const dashboardClasses = clsx("dashboardWrapper animate__animated", {
-    ["animate__zoomIn visible"]: props.visible
+    ["animate__zoomIn visible"]: props.visible,
   });
 
   const styleProps = {

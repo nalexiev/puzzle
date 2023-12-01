@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import BonusTypes from "../helpers/BonusTypes";
 
 import "./BonusSpinner.css";
 
@@ -7,71 +8,102 @@ import clsx from "clsx";
 const BonusSpinner = (props) => {
 
     const [state, setState] = useState({
-        customSpinnerClass: "",
-        customCubeClass: ""
+        visible: false,
+        options: [],
+        top: 0
     });
 
+    const getBonusById = (id) => {
+        let bonus = BonusTypes.NO_BONUS;
+
+        for(let bonusElement in BonusTypes) {
+            const bonusType = BonusTypes[bonusElement];
+            
+            if (bonusType.index === id) {
+                bonus = bonusType;
+            }
+        }
+
+        return bonus;
+    };
+
+    const getMappedBonuses = (possibleBonuses) => {
+        const bonuses = [];
+
+        for(let bonus in BonusTypes) {
+            const bonusType = BonusTypes[bonus];
+
+            for(let possibleBonus in possibleBonuses) {
+                if (possibleBonuses[possibleBonus] === bonusType.index) {
+                    bonuses.push(bonusType);
+                }
+            }
+        }
+
+        return bonuses;
+    };
+
+    const getOptions = (bonus) => {
+        const currentBonus = getBonusById(bonus.bonus);
+        const possibleBonuses = getMappedBonuses(bonus.possibleBonuses);
+        const options = [];
+
+        for(let i = 0; i < 20; i++) {
+            if(i % 2 == 0) {
+                options.push(BonusTypes.NO_BONUS);
+            }
+            for(let a = 0; a < possibleBonuses.length; a++) {
+                options.push(possibleBonuses[a]);
+            }
+        }
+
+        options.push(currentBonus);
+
+        return options;
+    };
+
+    const runSpinner = () => {
+        const options = getOptions(props.possibleBonuses);
+        const top = 0 - ((options.length - 3) * 140);
+
+        setState((prev) => {
+            return {
+                ...prev,
+                visible: true,
+                options: options,
+                top: top
+            };
+        });
+
+        setTimeout(() => {
+            setState((prev) => {
+                return {
+                    ...prev,
+                    visible: false,
+                    top: 0,
+                };
+            });
+        }, 5000);
+    };
+
     useEffect(() => {
-        if (props.visible) {
-            setState((prev) => {
-                return {
-                    ...prev,
-                    customSpinnerClass: props.visible ? 'visible' : '',
-                };
-            });
-
-            setTimeout(() => {
-                setState((prev) => {
-                    return {
-                        ...prev,
-                        customCubeClass: props.bonusSpinnerBonus !== 0 ? 'show-win' : 'show-loose',
-                    };
-                });
-
-                setTimeout(() => {
-                    (props.afterRotation)();
-                }, 2500);
-            }, 500);
+        if(props.showBonusShuffle > 0) {
+            runSpinner();
         }
-        else {
-            setState((prev) => {
-                return {
-                    ...prev,
-                    customCubeClass: '',
-                    customSpinnerClass: '',
-                };
-            });
-        }
-    }, [props.visible]);
+    }, [props.showBonusShuffle]);
 
     const spinnerClasses = clsx(
         "spinner",
-        state.customSpinnerClass
+        { ["visible"]: state.visible === true },
     );
-
-    const cubeClasses = clsx(
-        "cube",
-        state.customCubeClass
-    );
-
-    const faceClasses = [
-        "cube__face cube__face--front",
-        "cube__face cube__face--back",
-        "cube__face cube__face--right",
-        "cube__face cube__face--left",
-        "cube__face cube__face--top",
-        "cube__face cube__face--bottom"
-    ];
-
+   
     return <div className={spinnerClasses}>
-        <div className={cubeClasses}>
-            {faceClasses.map((item, index) => {
-                return <div key={index} className={item}>
-                    BONUS
-                </div>
+        <div className="spinner-inner" style={{top: state.top + "px"}}>
+            {state.options.map((option, index) => {
+                return <div className={option.classString} key={index}>{option.shortName}</div>;
             })}
         </div>
-    </div>;
+    </div>
 };
 
 export default BonusSpinner;

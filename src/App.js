@@ -19,9 +19,10 @@ import BonusTypes from "./helpers/BonusTypes";
 import Multiplier from "./helpers/Multiplier";
 import UnderDashboard from "./components/UnderDashboard";
 
-import shuffleSound from "../src/sounds/shuffle.wav";
+import shuffleSound from "../src/sounds/shuffle.mp3";
 import winSound from "../src/sounds/win.wav";
 import endGame from "../src/sounds/end.wav";
+import bonusSound from "../src/sounds/bonus.mp3";
 
 import {
   getCollectedTiles,
@@ -51,6 +52,7 @@ const App = () => {
   const [shuffleSoundEffect] = useSound(shuffleSound);
   const [winSoundEffect] = useSound(winSound);
   const [endEffect] = useSound(endGame);
+  const [bonusEffect] = useSound(bonusSound);
 
   const [state, setState] = useState({
     dashboardTiles: [],
@@ -62,7 +64,9 @@ const App = () => {
     betSize: 2,
     step: 1,
     started: false,
-    roundStarted: 0
+    roundStarted: 0,
+    showBonusShuffle: 0,
+    possibleBonuses: []
   });
 
   useEffect(() => {
@@ -237,7 +241,8 @@ const App = () => {
       );
 
       addAppStep("showBonusShuffle", {
-        bonus: preBonuses[0]
+        bonus: preBonuses[0],
+        timeout: 6000
       });
 
       moveTemplate(bestMove.x, bestMove.y);
@@ -328,7 +333,8 @@ const App = () => {
       console.log("postBonuses");
 
       addAppStep("showBonusShuffle", {
-        bonus: postBonuses[0]
+        bonus: postBonuses[0],
+        timeout: 6000
       });
 
       let bonusResult;
@@ -557,8 +563,14 @@ const App = () => {
         break;
         
         case "showBonusShuffle":
-          // console.log("showBonusShuffle");
-          // console.log(currentStepToExecute.args.bonus);
+          bonusEffect();
+          setState((prev) => {
+            return {
+              ...prev,
+              showBonusShuffle: prev.showBonusShuffle + 1,
+              possibleBonuses: currentStepToExecute.args.bonus
+            };
+          });
         break;
 
         case "setCurrentStep":
@@ -587,7 +599,7 @@ const App = () => {
     <>
       <Dashboard visible={state.started} tiles={state.dashboardTiles}>
         <UnderDashboard>
-          <Dashboard x={state.position.x} y={state.position.y} visible={state.started} tiles={state.dashboardTiles}></Dashboard>
+          <Dashboard scaled={true} x={state.position.x} y={state.position.y} visible={state.started} tiles={state.dashboardTiles}></Dashboard>
         </UnderDashboard>
         <Template
           x={state.position.x}
@@ -602,7 +614,7 @@ const App = () => {
           templateTiles={state.templateTiles} 
         />
       </Dashboard>
-
+      <BonusSpinner possibleBonuses={state.possibleBonuses} showBonusShuffle={state.showBonusShuffle} />
       <Controls
         step={state.step}
         started={state.started}
